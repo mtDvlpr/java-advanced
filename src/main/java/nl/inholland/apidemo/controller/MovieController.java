@@ -1,6 +1,7 @@
 package nl.inholland.apidemo.controller;
 
 import nl.inholland.apidemo.model.Movie;
+import nl.inholland.apidemo.model.MovieNotFoundException;
 import nl.inholland.apidemo.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -30,18 +31,33 @@ public class MovieController {
   @GetMapping(value ="/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Movie> getMovie(@PathVariable int id) {
     Movie movie = service.getMovie(id);
-    return ResponseEntity.status(movie != null ? 200 : 404).body(movie);
+
+    if (movie == null) {
+      throw new MovieNotFoundException(id);
+    }
+
+    return ResponseEntity.status(200).body(movie);
   }
 
   @PutMapping(value ="/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Movie> updateMovie(@PathVariable int id, @RequestBody Movie newMovie) {
     Movie movie = service.updateMovie(id, newMovie);
-    return ResponseEntity.status(movie != null ? 200 : 404).body(movie);
+
+    if (movie == null) {
+      throw new MovieNotFoundException(id);
+    }
+
+    return ResponseEntity.status(200).body(movie);
   }
 
   @DeleteMapping(value ="/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Movie> deleteMovie(@PathVariable int id) {
     Movie movie = service.deleteMovie(id);
-    return ResponseEntity.status(movie != null ? 200 : 404).body(movie);
+
+    if (movie == null) {
+      throw new MovieNotFoundException(id);
+    }
+
+    return ResponseEntity.status(200).body(movie);
   }
 }

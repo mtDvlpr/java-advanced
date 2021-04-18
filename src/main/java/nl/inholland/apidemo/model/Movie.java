@@ -6,16 +6,16 @@ public class Movie {
 
   private final int id;
   private String title;
-  private String directors;
+  private String director;
   private String category;
   private int releaseYear;
   private int runtime;
   private double score;
 
-  public Movie(String title, String directors, String category, int releaseYear, int runtime, double score) {
+  public Movie(String title, String director, String category, int releaseYear, int runtime, double score) {
     this.id = nextId;
     this.title = title;
-    this.directors = directors;
+    this.director = director;
     this.category = category;
     this.releaseYear = releaseYear;
     this.runtime = runtime;
@@ -36,12 +36,12 @@ public class Movie {
     this.title = title;
   }
 
-  public String getDirectors() {
-    return directors;
+  public String getDirector() {
+    return director;
   }
 
-  public void setDirectors(String directors) {
-    this.directors = directors;
+  public void setDirector(String director) {
+    this.director = director;
   }
 
   public String getCategory() {
@@ -81,7 +81,7 @@ public class Movie {
     return "Movie{" +
         "uuid=" + id +
         ", title='" + title + '\'' +
-        ", directors=" + directors +
+        ", directors=" + director +
         ", category='" + category + '\'' +
         ", releaseYear=" + releaseYear +
         ", runtime=" + runtime +

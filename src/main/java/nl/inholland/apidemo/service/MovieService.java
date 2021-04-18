@@ -48,7 +48,12 @@ public class MovieService {
   public Movie updateMovie(int id, Movie newMovie) {
     for (Movie movie : movies) {
       if (movie.getId() == id) {
-        movies.set(movie.getId(), newMovie);
+        movie.setTitle(newMovie.getTitle());
+        movie.setCategory(newMovie.getCategory());
+        movie.setDirector(newMovie.getDirector());
+        movie.setReleaseYear(newMovie.getReleaseYear());
+        movie.setRuntime(newMovie.getRuntime());
+        movie.setScore(newMovie.getScore());
         return movie;
       }
     }
