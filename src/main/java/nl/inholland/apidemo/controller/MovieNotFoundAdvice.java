@@ -1,12 +1,9 @@
 package nl.inholland.apidemo.controller;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import nl.inholland.apidemo.model.MovieNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.*;
 
