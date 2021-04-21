@@ -12,25 +12,25 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "/movies")
+@RequestMapping("/movies")
 public class MovieController {
 
   @Autowired
-  private MovieService service;
+  private MovieService movieService;
 
-  @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<Movie>> getAllMovies() {
-    return ResponseEntity.status(200).body(service.getMovies());
+    return ResponseEntity.status(200).body(movieService.getMovies());
   }
 
-  @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
+  @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Movie> createMovie(@RequestBody Movie movie) {
-    return ResponseEntity.status(201).body(service.addMovie(movie));
+    return ResponseEntity.status(201).body(movieService.addMovie(movie));
   }
 
   @GetMapping(value ="/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Movie> getMovie(@PathVariable int id) {
-    Movie movie = service.getMovie(id);
+  public ResponseEntity<Movie> getMovie(@PathVariable long id) {
+    Movie movie = movieService.getMovie(id);
 
     if (movie == null) {
       throw new MovieNotFoundException(id);
@@ -40,8 +40,8 @@ public class MovieController {
   }
 
   @PutMapping(value ="/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Movie> updateMovie(@PathVariable int id, @RequestBody Movie newMovie) {
-    Movie movie = service.updateMovie(id, newMovie);
+  public ResponseEntity<Movie> updateMovie(@PathVariable long id, @RequestBody Movie newMovie) {
+    Movie movie = movieService.updateMovie(id, newMovie);
 
     if (movie == null) {
       throw new MovieNotFoundException(id);
@@ -51,8 +51,8 @@ public class MovieController {
   }
 
   @DeleteMapping(value ="/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Movie> deleteMovie(@PathVariable int id) {
-    Movie movie = service.deleteMovie(id);
+  public ResponseEntity<Movie> deleteMovie(@PathVariable long id) {
+    Movie movie = movieService.deleteMovie(id);
 
     if (movie == null) {
       throw new MovieNotFoundException(id);

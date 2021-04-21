@@ -1,30 +1,44 @@
 package nl.inholland.apidemo.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import javax.persistence.*;
+
+@Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Movie {
 
-  private static int nextId = 1;
-
-  private final int id;
+  @Id
+  @GeneratedValue
+  private long id;
   private String title;
-  private String director;
+
+  @ManyToOne
+  @JsonBackReference
+  private Director director;
   private String category;
   private int releaseYear;
   private int runtime;
   private double score;
 
-  public Movie(String title, String director, String category, int releaseYear, int runtime, double score) {
-    this.id = nextId;
+  @OneToOne(mappedBy = "movie")
+  private Stock stock;
+
+  public Movie() {
+
+  }
+
+  public Movie(String title, Director director, String category, int releaseYear, int runtime, double score) {
     this.title = title;
     this.director = director;
     this.category = category;
     this.releaseYear = releaseYear;
     this.runtime = runtime;
     this.score = score;
-
-    nextId++;
   }
 
-  public int getId() {
+  public long getId() {
     return id;
   }
 
@@ -36,11 +50,11 @@ public class Movie {
     this.title = title;
   }
 
-  public String getDirector() {
+  public Director getDirector() {
     return director;
   }
 
-  public void setDirector(String director) {
+  public void setDirector(Director director) {
     this.director = director;
   }
 
@@ -78,14 +92,15 @@ public class Movie {
 
   @Override
   public String toString() {
-    return "Movie{" +
-        "uuid=" + id +
-        ", title='" + title + '\'' +
-        ", directors=" + director +
-        ", category='" + category + '\'' +
-        ", releaseYear=" + releaseYear +
-        ", runtime=" + runtime +
-        ", score=" + score +
-        '}';
+    final StringBuffer sb = new StringBuffer("Movie{");
+    sb.append("id=").append(id);
+    sb.append(", title='").append(title).append('\'');
+    sb.append(", director='").append(director).append('\'');
+    sb.append(", category='").append(category).append('\'');
+    sb.append(", releaseYear=").append(releaseYear);
+    sb.append(", runtime=").append(runtime);
+    sb.append(", score=").append(score);
+    sb.append('}');
+    return sb.toString();
   }
 }
