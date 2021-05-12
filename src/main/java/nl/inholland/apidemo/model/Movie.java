@@ -79,6 +79,9 @@ public class Movie {
   }
 
   public void setRuntime(int runtime) {
+    if (runtime < 0) {
+      throw new IllegalArgumentException("Runtime cannot be smaller than 0.");
+    }
     this.runtime = runtime;
   }
 
