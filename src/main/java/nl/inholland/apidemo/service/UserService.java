@@ -5,7 +5,7 @@ import nl.inholland.apidemo.repository.UserRepository;
 import nl.inholland.apidemo.security.JwtTokenProvider;
 import nl.inholland.apidemo.security.Role;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -49,7 +49,7 @@ public class UserService {
       } else {
         user.setRoles(roles);
       }
-      System.out.println(user.toString());
+      System.out.println(user);
       userRepository.save(user);
       return jwtTokenProvider.createToken(user.getUsername(), user.getRoles());
     } else {
@@ -57,8 +57,7 @@ public class UserService {
     }
   }
 
-  //@Bean
-  @Autowired
+  @Bean
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder(12);
   }

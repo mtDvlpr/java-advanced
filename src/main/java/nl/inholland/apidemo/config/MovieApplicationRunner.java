@@ -3,9 +3,12 @@ package nl.inholland.apidemo.config;
 import nl.inholland.apidemo.model.Director;
 import nl.inholland.apidemo.model.Movie;
 import nl.inholland.apidemo.model.Stock;
+import nl.inholland.apidemo.model.User;
+import nl.inholland.apidemo.security.Role;
 import nl.inholland.apidemo.service.DirectorService;
 import nl.inholland.apidemo.service.MovieService;
 import nl.inholland.apidemo.service.StockService;
+import nl.inholland.apidemo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -27,6 +30,9 @@ public class MovieApplicationRunner implements ApplicationRunner {
 
   @Autowired
   private DirectorService directorService;
+
+  @Autowired
+  private UserService userService;
 
   @Override
   public void run(ApplicationArguments args) throws Exception {
@@ -57,6 +63,8 @@ public class MovieApplicationRunner implements ApplicationRunner {
     directorService.addDirector(lucas);
     directorService.addDirector(abrams);
     directorService.addDirector(johnson);
+
+    //userService.add("admin", "admin", List.of(Role.ROLE_USER, Role.ROLE_ADMIN));
 
     for (Movie movie : movieList) {
         movieService.addMovie(movie);

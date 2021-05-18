@@ -7,11 +7,13 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import nl.inholland.apidemo.service.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
@@ -76,7 +78,7 @@ public class JwtTokenProvider {
       Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
       return true;
     } catch (JwtException | IllegalArgumentException e) {
-      throw new IllegalArgumentException("Expired or invalid JWT token");
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Expired or invalid JWT token");
     }
   }
 
